@@ -1,0 +1,30 @@
+services:
+  # HireSight Backend API
+  - type: web
+    name: hiresight-api
+    env: python
+    region: oregon
+    plan: free
+    branch: main
+    buildCommand: "./build.sh"
+    startCommand: "./start.sh"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.0
+      - key: ENVIRONMENT
+        value: production
+      - key: DATABASE_URL
+        value: sqlite:///./data/hiresight.db
+      - key: LOG_LEVEL
+        value: INFO
+      - key: LOG_FORMAT
+        value: json
+      - key: CORS_ORIGINS
+        generateValue: true
+        sync: false
+      - key: PORT
+        value: 10000
+      - key: HOST
+        value: 0.0.0.0
+    healthCheckPath: /health
+    autoDeploy: true
